@@ -1,0 +1,25 @@
+@startuml
+left to right direction
+
+actor Driver
+actor Admin
+
+rectangle "Smart Parking System" {
+
+  Driver -- (Register Vehicle)
+  Driver -- (Park Vehicle)
+  Driver -- (Exit Vehicle)
+  Driver -- (View Parking Status)
+  Driver -- (Get Ticket)
+  Driver -- (Pay Fee)
+
+  Admin -- (Configure Parking Slots)
+  Admin -- (Manage Pricing Strategy)
+  Admin -- (View Analytics Report)
+  Admin -- (Monitor System)
+  Admin -- (Maintain Parking Lot)
+
+  (Park Vehicle) ..> (Get Ticket) : <<include>>
+  (Exit Vehicle) ..> (Pay Fee) : <<include>>
+}
+@enduml
