@@ -1,0 +1,60 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor Driver
+actor Admin
+
+rectangle "Smart Parking System" {
+
+  '---------------- DRIVER USE CASES ----------------
+  Driver -- (Register Vehicle)
+  Driver -- (View Parking Status)
+  Driver -- (Park Vehicle)
+  Driver -- (Exit Vehicle)
+  Driver -- (Pay Parking Fee)
+  Driver -- (Receive Ticket)
+
+  '---------------- PARK VEHICLE FLOW ----------------
+  (Park Vehicle) --> (Validate Vehicle Type)
+  (Park Vehicle) --> (Find Available Slot)
+  (Find Available Slot) --> (Check Slot Compatibility)
+  (Park Vehicle) --> (Assign Slot)
+  (Assign Slot) --> (Generate Ticket)
+  (Generate Ticket) --> (Record Entry Time)
+  (Generate Ticket) --> (Store Ticket)
+
+  (Park Vehicle) ..> (Receive Ticket) : <<include>>
+
+  '---------------- EXIT VEHICLE FLOW ----------------
+  (Exit Vehicle) --> (Validate Ticket ID)
+  (Exit Vehicle) --> (Calculate Parking Duration)
+  (Calculate Parking Duration) --> (Apply Pricing Strategy)
+  (Apply Pricing Strategy) --> (Compute Fee)
+  (Exit Vehicle) --> (Release Parking Slot)
+  (Exit Vehicle) ..> (Pay Parking Fee) : <<include>>
+
+  '---------------- PRICING ----------------
+  (Apply Pricing Strategy) <|-- (Standard Pricing)
+  (Apply Pricing Strategy) <|-- (Peak Hour Pricing)
+
+  '---------------- ADMIN USE CASES ----------------
+  Admin -- (Configure Parking Floors)
+  Admin -- (Configure Parking Slots)
+  Admin -- (Manage Vehicle Slot Types)
+  Admin -- (Set Pricing Strategy)
+  Admin -- (Switch to Peak Pricing)
+  Admin -- (Monitor Parking Lot)
+  Admin -- (View Analytics Report)
+  Admin -- (Maintain Parking Lot)
+
+  '---------------- ANALYTICS ----------------
+  (View Analytics Report) --> (Check Occupancy Status)
+  (Check Occupancy Status) --> (Generate Usage Summary)
+
+  '---------------- SYSTEM AUTOMATION ----------------
+  (Store Ticket) ..> (Ticket Database) : <<include>>
+  (Monitor Parking Lot) ..> (Check Slot Availability) : <<include>>
+
+}
+@enduml
